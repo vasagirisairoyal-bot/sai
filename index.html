@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You - Paper Flip</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+    margin: 0;
+    font-family: Georgia, serif;
+    background: radial-gradient(circle at top,#2a2040,#0d0b1f);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 10px;
+}
+
+.book {
+    width: 100%;
+    max-width: 420px;
+    min-height: 70vh;
+    background: linear-gradient(135deg,#ff9a9e,#c77dff,#845ec2);
+    border-radius: 22px;
+    padding: 30px;
+    box-shadow:
+        0 0 35px rgba(255, 154, 158, 0.35),
+        0 0 60px rgba(199, 125, 255, 0.25),
+        inset 0 0 30px rgba(255,255,255,0.15);
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.page-content {
+    text-align: center;
+    max-height: 70vh;
+    overflow-y: auto;
+    padding: 10px 20px;
+}
+
+input[type="password"] {
+    padding: 10px;
+    border-radius: 12px;
+    border: none;
+    width: 60%;
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.sticker {
+    font-size: 36px;
+    margin: 10px 0;
+}
+
+.next-arrow {
+    font-size: 32px;
+    cursor: pointer;
+    color: #3a2600;
+    font-weight: bold;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    user-select: none;
+    transition: transform 0.2s;
+}
+
+.next-arrow:hover {
+    transform: scale(1.2);
+}
+
+.page {
+    width: 100%;
+    min-height: 70vh;
+    position: absolute;
+    top:0;
+    left:0;
+    backface-visibility: hidden;
+    transform-origin: left;
+    transition: transform 0.6s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+@media(max-width:480px){
+    .book {
+        max-width: 90%;
+        min-height: 60vh;
+        padding: 20px;
+    }
+    .next-arrow {
+        font-size: 28px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="book" id="book">
+    <div class="page" id="page"></div>
+</div>
+
+<script>
+const pages = [
+`<div class="sticker">📖✨</div>
+<h2>Enter Password</h2>
+<p>(Enter correct password to proceed)</p>
+<input type="password" id="pwd">
+<div class="next-arrow" onclick="checkPwd()">→</div>`,
+
+`<div class="sticker">🤗💑</div>
+<p>Own ga cheyamanav ga chesa. Chudu babe.</p>
+<div class="next-arrow" onclick="nextPage()">→</div>`,
+
+`<div class="sticker">🎵🎶</div>
+<p>Song vintu chudu</p>
+<div class="next-arrow" onclick="playSong()">→</div>`,
+
+`<div class="sticker">💖💍</div>
+<h3>My Love</h3>
+<p style="line-height:1.6;">
+I love the way you are, I wanted to have a life full of happiness with you.<br>
+You are not one of my life, you are part of my life.<br><br>
+From my side, I want to make you happy in every moment and wish you success.
+</p>
+<div class="next-arrow" onclick="nextPage()">→</div>`,
+
+`<div class="sticker">📸🤗</div>
+<h3>Memories</h3>
+<p style="line-height:1.6;">
+I remember the first day I saw you and fell for your eyes.<br>
+Even now, when I look into your eyes, I feel the same.<br>
+I still remember our first touch, the first meet we had.<br><br>
+I want to create more and more memories with you. You became a part of me, and I’m loving it.
+</p>
+<div class="next-arrow" onclick="nextPage()">→</div>`,
+
+`<div class="sticker">🔥💋</div>
+<p style="line-height:1.6;">
+I don’t crave just touch. I crave closeness.<br>
+I also love the playful side of you and the poses you give.<br>
+The hotness you have will melt me down every second.<br>
+I will always be in mood for you babe, that's my greatness.
+</p>
+<div class="next-arrow" onclick="nextPage()">→</div>`,
+
+`<div class="sticker">🌹💑</div>
+<p style="line-height:1.6;">
+Thank you for being you and making every moment special.
+</p>
+<div class="next-arrow" onclick="nextPage()">→</div>`,
+
+`<div class="sticker">💌✨💍</div>
+<p style="line-height:1.7;">
+This isn’t the end.<br><br>
+This is where I stop writing… and start choosing you forever.<br><br>
+<b>— Akshaya Royal</b>
+</p>`
+];
+
+let current = 0;
+const page = document.getElementById("page");
+
+function renderPage(){
+    page.innerHTML = pages[current];
+    page.style.transform = "rotateY(0deg)";
+}
+
+function nextPage(){
+    if(current < pages.length-1){
+        page.style.transform = "rotateY(-180deg)";
+        setTimeout(()=>{
+            current++;
+            renderPage();
+        }, 300);
+    }
+}
+
+function checkPwd(){
+    const entered = document.getElementById("pwd")?.value;
+    if(entered === "1806"){
+        nextPage();
+    } else {
+        alert("Wrong password 🙂");
+    }
+}
+
+function playSong(){
+    const song = document.getElementById("song");
+    if(song) song.play();
+    nextPage();
+}
+
+// Initial render
+renderPage();
+</script>
+
+<audio id="song" src="song.mp3"></audio>
+</body>
+</html>
